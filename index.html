@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equity Research Tool</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Header -->
+    <header class="bg-blue-600 text-white p-4">
+        <div class="container mx-auto">
+            <h1 class="text-3xl font-bold">Equity Research Tool 📈</h1>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto mt-10 p-4">
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <form id="urlForm" class="space-y-4">
+                <div>
+                    <label for="url1" class="block text-lg font-medium">URL 1:</label>
+                    <input type="text" id="url1" name="url1" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label for="url2" class="block text-lg font-medium">URL 2:</label>
+                    <input type="text" id="url2" name="url2" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label for="url3" class="block text-lg font-medium">URL 3:</label>
+                    <input type="text" id="url3" name="url3" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <input type="submit" value="Process URLs" class="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg hover:bg-blue-700 cursor-pointer transition duration-200">
+                </div>
+            </form>
+
+            <div id="result" class="mt-6 p-4 bg-gray-100 rounded-lg border border-gray-200">
+                <!-- Results from the server will be displayed here -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white p-4 mt-10">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 Equity Research Tool. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('urlForm').onsubmit = async function(event) {
+            event.preventDefault();
+            const url1 = document.getElementById('url1').value;
+            const url2 = document.getElementById('url2').value;
+            const url3 = document.getElementById('url3').value;
+
+            const response = await fetch('/process_urls', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ url1, url2, url3 }),
+            });
+
+            const result = await response.json();
+            document.getElementById('result').innerHTML = `
+                <h2 class="text-xl font-bold">Results:</h2>
+                <pre class="whitespace-pre-wrap">${JSON.stringify(result, null, 2)}</pre>
+            `;
+        };
+    </script>
+</body>
+</html>
