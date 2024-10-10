@@ -6,7 +6,6 @@ numpy==1.24.3
 sentence-transformers==2.2.2  
 langchain==0.0.208 
 cohere==4.10.1  
-setuptools
-wheel
 pip==24.2
-
+cohere==4.9.0  
+setuptools==58.0.4
